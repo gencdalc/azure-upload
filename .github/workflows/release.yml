@@ -1,0 +1,34 @@
+name: Java CI with Maven Release
+
+on:
+  push:
+    tags:
+      - 'v*' # Reagiert auf Tags wie v1.0.0, v1.1.0 etc.
+
+permissions:
+  contents: write
+
+jobs:
+  build-and-release:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Code auschecken
+      uses: actions/checkout@v4
+
+    - name: Java einrichten
+      uses: actions/setup-java@v4
+      with:
+        java-version: '17' # Nutzen Sie hier Ihre Java-Version (z.B. 17 oder 21)
+        distribution: 'temurin'
+        cache: maven
+
+    - name: Projekt mit Maven bauen
+      run: mvn clean package -DskipTests
+
+    - name: GitHub Release erstellen
+      uses: softprops/action-gh-release@v2
+      with:
+        files: target/*.jar # Lädt die JAR-Datei automatisch hoch
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
