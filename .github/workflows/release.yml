@@ -19,7 +19,7 @@ jobs:
     - name: Java einrichten
       uses: actions/setup-java@v4
       with:
-        java-version: '17' # Nutzen Sie hier Ihre Java-Version (z.B. 17 oder 21)
+        java-version: '21' # Nutzen Sie hier Ihre Java-Version (z.B. 17 oder 21)
         distribution: 'temurin'
         cache: maven
 
